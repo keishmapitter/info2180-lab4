@@ -62,11 +62,31 @@ $superheroes = [
       "biography" => "Notably powerful, Wanda Maximoff has fought both against and with the Avengers, attempting to hone her abilities and do what she believes is right to help the world.",
   ], 
 ];
-
 ?>
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+
+<?php 
+$Myquery = filter_input(INPUT_GET, "query", FILTER_SANITIZE_STRING);
+$Test=false;
+foreach ($superheroes as $gethero)
+{
+    if ($gethero['alias'] === $Myquery || $gethero['name']==$Myquery)
+    {
+        $Test=true;
+        echo"<h3>{$gethero['alias']}</h3>";
+        echo"<h4>{$gethero['name']}</h4>";
+        echo"</p>{$gethero['biography']}</p>";
+        
+    }
+    elseif(strlen($Myquery) === 0){
+    
+      echo"<ul><li>{$gethero['alias']}</li> </ul>";
+     $Test=true;
+    } 
+
+}
+if ($Test == false)
+{
+        echo "<p>SUPERHERO NOT FOUND</p>";
+}
+?>
